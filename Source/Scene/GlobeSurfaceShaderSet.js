@@ -85,6 +85,7 @@ import SceneMode from './SceneMode.js';
         var colorCorrect = options.colorCorrect;
         var highlightFillTile = options.highlightFillTile;
         var colorToAlpha = options.colorToAlpha;
+        var globeTranslucent = options.globeTranslucent;
 
         var quantization = 0;
         var quantizationDefine = '';
@@ -144,7 +145,8 @@ import SceneMode from './SceneMode.js';
                     (imageryCutoutFlag << 23) |
                     (colorCorrect << 24) |
                     (highlightFillTile << 25) |
-                    (colorToAlpha << 26);
+                    (colorToAlpha << 26) |
+                    (globeTranslucent << 27);
 
         var currentClippingShaderState = 0;
         if (defined(clippingPlanes) && clippingPlanes.length > 0) {
@@ -206,6 +208,10 @@ import SceneMode from './SceneMode.js';
             }
             if (colorToAlpha) {
                 fs.defines.push('APPLY_COLOR_TO_ALPHA');
+            }
+            if (globeTranslucent) {
+                vs.defines.push('GLOBE_TRANSLUCENT');
+                fs.defines.push('GLOBE_TRANSLUCENT');
             }
 
             if (enableLighting) {
